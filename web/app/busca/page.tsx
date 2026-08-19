@@ -9,7 +9,7 @@ export default function SearchPage() {
       <Suspense
         fallback={
           <div className="mx-auto w-full max-w-3xl px-4 py-12 text-sm text-muted-foreground">
-            A carregar a busca…
+            Carregando a busca…
           </div>
         }
       >

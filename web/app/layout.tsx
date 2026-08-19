@@ -28,13 +28,13 @@ export const metadata: Metadata = {
     template: "%s — Bíblia Figueiredo",
   },
   description:
-    "Leitura integral da Bíblia Sagrada na tradução de António Pereira de Figueiredo, a partir da Vulgata latina. Cânone católico, 73 livros.",
+    "Leitura integral da Bíblia Sagrada na tradução de Antônio Pereira de Figueiredo, a partir da Vulgata latina. Cânone católico, 73 livros.",
 }
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
-      lang="pt"
+      lang="pt-BR"
       suppressHydrationWarning
       className={`${display.variable} ${reading.variable} ${ui.variable} h-full`}
     >

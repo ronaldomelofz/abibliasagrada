@@ -1,6 +1,6 @@
 # Bíblia Sagrada — Figueiredo
 
-Leitura integral da [Bíblia Sagrada](https://abibliasagrada.netlify.app/) na tradução de António Pereira de Figueiredo (Vulgata latina, cânone católico, 73 livros).
+Leitura integral da [Bíblia Sagrada](https://abibliasagrada.netlify.app/) na tradução de Antônio Pereira de Figueiredo (Vulgata latina, cânone católico, 73 livros).
 
 Site: **https://abibliasagrada.netlify.app**  
 Publicação: Netlify, a partir deste repositório.

@@ -286,6 +286,9 @@ RE_TABLE = re.compile(
 RE_VERSE = re.compile(r"^(\d{1,3})[.\-:\u2013\u2014]?\s+(.*\S.*)$")
 RE_VERSE_ONLY = re.compile(r"^(\d{1,3})\s*[.\-:]?\s*$")
 RE_FN_MARK = re.compile(r"^\(\s*(\d{1,2})\s*\)")
+RE_FN_MARK_ALT = re.compile(
+    r"^(?:\((?P<a>\d{1,2})\)|(?P<b>\d{1,2})\s*[\)\]]|(?P<c>\d{1,2})\s+[—–\-])\s+"
+)
 RE_FN_INLINE = re.compile(r"\(\s*(\d{1,2})\s*\)")
 RE_INDEX = re.compile(r"INDICE|I N D I C E", re.I)
 RE_PAGE_NUM = re.compile(r"^[\-\u2014\u2013]?\s*\d{1,3}\s*[\-\u2014\u2013]?\s*$")
@@ -404,19 +407,27 @@ def parse_notes(note_lines: list[str]) -> dict[int, str]:
     notes: dict[int, str] = {}
     cur = None
     buf = []
+
+    def flush():
+        nonlocal cur, buf
+        if cur is not None:
+            txt = normalize_body(" ".join(buf))
+            if len(txt) > 3:
+                notes[cur] = txt
+        cur = None
+        buf = []
+
     for ln in note_lines:
-        m = RE_FN_MARK.match(ln)
+        m = RE_FN_MARK.match(ln) or RE_FN_MARK_ALT.match(ln)
         if m:
-            if cur is not None:
-                notes[cur] = normalize_body(" ".join(buf))
-            cur = int(m.group(1))
-            rest = RE_FN_MARK.sub("", ln).strip()
+            flush()
+            cur = int(next(g for g in m.groups() if g))
+            rest = ln[m.end() :].strip()
             buf = [rest] if rest else []
         elif cur is not None:
             buf.append(ln)
-    if cur is not None:
-        notes[cur] = normalize_body(" ".join(buf))
-    return {k: v for k, v in notes.items() if len(v) > 3}
+    flush()
+    return notes
 
 
 def extract_volume(vol: int, pdf: Path) -> list[dict]:
@@ -477,6 +488,22 @@ class Store:
         seen = {n["n"] for n in prev["notas"]}
         for n in notas:
             if n["n"] not in seen and n["t"]:
+                prev["notas"].append(n)
+                seen.add(n["n"])
+
+    def add_notes(self, slug, ch, vn, notas):
+        """Liga notas que o OCR leu no rodapé, mesmo sem (n) no versículo."""
+        if not slug or not ch or not vn or not notas:
+            return
+        cap = self.books.get(slug, {}).get("caps", {}).get(ch)
+        if not cap:
+            return
+        prev = cap["v"].get(vn)
+        if not prev:
+            return
+        seen = {n["n"] for n in prev["notas"]}
+        for n in notas:
+            if n["n"] not in seen and n.get("t"):
                 prev["notas"].append(n)
                 seen.add(n["n"])
 
@@ -888,6 +915,14 @@ def parse_bible(vol_pages: dict[int, list]) -> Store:
             if not current or not body:
                 continue
             page_notes = parse_notes(p["notes"])
+            used_notes: set[int] = set()
+
+            def notes_for(line: str) -> list[dict]:
+                refs = [int(x) for x in RE_FN_INLINE.findall(line)]
+                out = [{"n": n, "t": page_notes.get(n, "")} for n in refs if page_notes.get(n)]
+                used_notes.update(x["n"] for x in out)
+                return out
+
             page_last = last_vn
             for ln in reversed(body):
                 vm = RE_VERSE.match(normalize_verse_prefix(ln))
@@ -1026,9 +1061,7 @@ def parse_bible(vol_pages: dict[int, list]) -> Store:
                     collecting = False
                     verse = verse_n
                     last_vn = verse
-                    refs = [int(x) for x in RE_FN_INLINE.findall(ln)]
-                    notas = [{"n": n, "t": page_notes.get(n, "")} for n in refs if page_notes.get(n)]
-                    store.add(current, chapter or 1, verse, rest, title, notas)
+                    store.add(current, chapter or 1, verse, rest, title, notes_for(ln))
                     title = ""
                     j += 1
                     continue
@@ -1052,9 +1085,7 @@ def parse_bible(vol_pages: dict[int, list]) -> Store:
                             set_chapter(newc, False)
                         verse = verse_n
                         last_vn = verse
-                        refs = [int(x) for x in RE_FN_INLINE.findall(nxt)]
-                        notas = [{"n": n, "t": page_notes.get(n, "")} for n in refs if page_notes.get(n)]
-                        store.add(current, chapter or 1, verse, nxt, title, notas)
+                        store.add(current, chapter or 1, verse, nxt, title, notes_for(nxt))
                         title = ""
                         j += 2
                         continue
@@ -1066,9 +1097,7 @@ def parse_bible(vol_pages: dict[int, list]) -> Store:
                     collecting = False
                     verse = 1
                     last_vn = 1
-                    refs = [int(x) for x in RE_FN_INLINE.findall(ln)]
-                    notas = [{"n": n, "t": page_notes.get(n, "")} for n in refs if page_notes.get(n)]
-                    store.add(current, chapter, 1, ln, title, notas)
+                    store.add(current, chapter, 1, ln, title, notes_for(ln))
                     title = ""
                     j += 1
                     continue
@@ -1076,17 +1105,16 @@ def parse_bible(vol_pages: dict[int, list]) -> Store:
                     if len(ln) > 18 and not looks_like_chapter_title(ln) and not parse_capitulo_num(ln):
                         verse = 1
                         last_vn = 1
-                        refs = [int(x) for x in RE_FN_INLINE.findall(ln)]
-                        notas = [{"n": n, "t": page_notes.get(n, "")} for n in refs if page_notes.get(n)]
-                        store.add(current, chapter, 1, ln, title, notas)
+                        store.add(current, chapter, 1, ln, title, notes_for(ln))
                         title = ""
                         j += 1
                         continue
                 if verse and current and not collecting and not is_junk_line(ln) and not is_running_header(ln):
-                    refs = [int(x) for x in RE_FN_INLINE.findall(ln)]
-                    notas = [{"n": n, "t": page_notes.get(n, "")} for n in refs if page_notes.get(n)]
-                    store.add(current, chapter or 1, verse, ln, "", notas)
+                    store.add(current, chapter or 1, verse, ln, "", notes_for(ln))
                 j += 1
+            leftover = [{"n": n, "t": t} for n, t in sorted(page_notes.items()) if n not in used_notes]
+            if leftover and current and chapter and last_vn:
+                store.add_notes(current, chapter, last_vn, leftover)
     return store
 
 

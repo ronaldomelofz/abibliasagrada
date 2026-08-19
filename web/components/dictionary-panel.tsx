@@ -37,11 +37,11 @@ export function DictionaryPanel() {
       <Input
         value={q}
         onChange={(e) => setQ(e.target.value)}
-        placeholder={entries.length ? "Procurar verbete…" : "A carregar…"}
+        placeholder={entries.length ? "Buscar verbete…" : "Carregando…"}
         className="mt-8 h-12 bg-card font-reading text-base"
       />
       <p className="mt-3 text-xs text-muted-foreground">
-        {entries.length} verbetes · a mostrar {shown.length}
+        {entries.length} verbetes · mostrando {shown.length}
       </p>
       <ol className="mt-10 space-y-8">
         {shown.map((e) => (

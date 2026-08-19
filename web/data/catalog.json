@@ -11,7 +11,7 @@
       "testamento": "at",
       "capitulos": 50,
       "versiculos": 1482,
-      "notas": 190
+      "notas": 193
     },
     {
       "id": "exodo",
@@ -20,7 +20,7 @@
       "testamento": "at",
       "capitulos": 40,
       "versiculos": 1152,
-      "notas": 166
+      "notas": 173
     },
     {
       "id": "levitico",
@@ -29,7 +29,7 @@
       "testamento": "at",
       "capitulos": 27,
       "versiculos": 829,
-      "notas": 131
+      "notas": 133
     },
     {
       "id": "numeros",
@@ -38,7 +38,7 @@
       "testamento": "at",
       "capitulos": 36,
       "versiculos": 1186,
-      "notas": 165
+      "notas": 167
     },
     {
       "id": "deuteronomio",
@@ -47,7 +47,7 @@
       "testamento": "at",
       "capitulos": 34,
       "versiculos": 904,
-      "notas": 145
+      "notas": 152
     },
     {
       "id": "josue",
@@ -56,7 +56,7 @@
       "testamento": "at",
       "capitulos": 24,
       "versiculos": 599,
-      "notas": 95
+      "notas": 98
     },
     {
       "id": "juizes",
@@ -65,7 +65,7 @@
       "testamento": "at",
       "capitulos": 21,
       "versiculos": 595,
-      "notas": 91
+      "notas": 92
     },
     {
       "id": "rute",
@@ -74,7 +74,7 @@
       "testamento": "at",
       "capitulos": 4,
       "versiculos": 82,
-      "notas": 12
+      "notas": 13
     },
     {
       "id": "1-samuel",
@@ -83,7 +83,7 @@
       "testamento": "at",
       "capitulos": 31,
       "versiculos": 770,
-      "notas": 131
+      "notas": 135
     },
     {
       "id": "2-samuel",
@@ -92,7 +92,7 @@
       "testamento": "at",
       "capitulos": 24,
       "versiculos": 658,
-      "notas": 127
+      "notas": 130
     },
     {
       "id": "1-reis",
@@ -101,7 +101,7 @@
       "testamento": "at",
       "capitulos": 22,
       "versiculos": 770,
-      "notas": 136
+      "notas": 141
     },
     {
       "id": "2-reis",
@@ -110,7 +110,7 @@
       "testamento": "at",
       "capitulos": 25,
       "versiculos": 657,
-      "notas": 106
+      "notas": 109
     },
     {
       "id": "1-cronicas",
@@ -119,7 +119,7 @@
       "testamento": "at",
       "capitulos": 29,
       "versiculos": 889,
-      "notas": 64
+      "notas": 65
     },
     {
       "id": "2-cronicas",
@@ -128,7 +128,7 @@
       "testamento": "at",
       "capitulos": 36,
       "versiculos": 746,
-      "notas": 103
+      "notas": 106
     },
     {
       "id": "esdras",
@@ -137,7 +137,7 @@
       "testamento": "at",
       "capitulos": 10,
       "versiculos": 269,
-      "notas": 41
+      "notas": 42
     },
     {
       "id": "neemias",
@@ -146,7 +146,7 @@
       "testamento": "at",
       "capitulos": 13,
       "versiculos": 389,
-      "notas": 57
+      "notas": 58
     },
     {
       "id": "tobias",
@@ -164,7 +164,7 @@
       "testamento": "at",
       "capitulos": 16,
       "versiculos": 330,
-      "notas": 30
+      "notas": 31
     },
     {
       "id": "ester",
@@ -173,7 +173,7 @@
       "testamento": "at",
       "capitulos": 16,
       "versiculos": 253,
-      "notas": 40
+      "notas": 42
     },
     {
       "id": "jo",
@@ -182,7 +182,7 @@
       "testamento": "at",
       "capitulos": 42,
       "versiculos": 1014,
-      "notas": 250
+      "notas": 253
     },
     {
       "id": "salmos",
@@ -191,7 +191,7 @@
       "testamento": "at",
       "capitulos": 150,
       "versiculos": 2443,
-      "notas": 840
+      "notas": 881
     },
     {
       "id": "proverbios",
@@ -200,7 +200,7 @@
       "testamento": "at",
       "capitulos": 31,
       "versiculos": 884,
-      "notas": 264
+      "notas": 269
     },
     {
       "id": "eclesiastes",
@@ -227,7 +227,7 @@
       "testamento": "at",
       "capitulos": 19,
       "versiculos": 435,
-      "notas": 73
+      "notas": 76
     },
     {
       "id": "eclesiastico",
@@ -236,7 +236,7 @@
       "testamento": "at",
       "capitulos": 51,
       "versiculos": 1565,
-      "notas": 330
+      "notas": 337
     },
     {
       "id": "isaias",
@@ -245,7 +245,7 @@
       "testamento": "at",
       "capitulos": 66,
       "versiculos": 1258,
-      "notas": 437
+      "notas": 440
     },
     {
       "id": "jeremias",
@@ -254,7 +254,7 @@
       "testamento": "at",
       "capitulos": 52,
       "versiculos": 1319,
-      "notas": 283
+      "notas": 287
     },
     {
       "id": "lamentacoes",
@@ -263,7 +263,7 @@
       "testamento": "at",
       "capitulos": 5,
       "versiculos": 153,
-      "notas": 28
+      "notas": 31
     },
     {
       "id": "baruc",
@@ -272,7 +272,7 @@
       "testamento": "at",
       "capitulos": 6,
       "versiculos": 210,
-      "notas": 31
+      "notas": 32
     },
     {
       "id": "ezequiel",
@@ -281,7 +281,7 @@
       "testamento": "at",
       "capitulos": 48,
       "versiculos": 1226,
-      "notas": 286
+      "notas": 289
     },
     {
       "id": "daniel",
@@ -290,7 +290,7 @@
       "testamento": "at",
       "capitulos": 14,
       "versiculos": 523,
-      "notas": 95
+      "notas": 97
     },
     {
       "id": "oseias",
@@ -317,7 +317,7 @@
       "testamento": "at",
       "capitulos": 9,
       "versiculos": 126,
-      "notas": 35
+      "notas": 37
     },
     {
       "id": "abdias",
@@ -362,7 +362,7 @@
       "testamento": "at",
       "capitulos": 3,
       "versiculos": 55,
-      "notas": 15
+      "notas": 17
     },
     {
       "id": "sofonias",
@@ -371,7 +371,7 @@
       "testamento": "at",
       "capitulos": 3,
       "versiculos": 51,
-      "notas": 13
+      "notas": 14
     },
     {
       "id": "ageu",
@@ -389,7 +389,7 @@
       "testamento": "at",
       "capitulos": 14,
       "versiculos": 199,
-      "notas": 67
+      "notas": 68
     },
     {
       "id": "malaquias",
@@ -407,7 +407,7 @@
       "testamento": "at",
       "capitulos": 16,
       "versiculos": 771,
-      "notas": 104
+      "notas": 109
     },
     {
       "id": "2-macabeus",
@@ -425,7 +425,7 @@
       "testamento": "nt",
       "capitulos": 28,
       "versiculos": 985,
-      "notas": 258
+      "notas": 266
     },
     {
       "id": "marcos",
@@ -434,7 +434,7 @@
       "testamento": "nt",
       "capitulos": 16,
       "versiculos": 619,
-      "notas": 64
+      "notas": 67
     },
     {
       "id": "lucas",
@@ -443,7 +443,7 @@
       "testamento": "nt",
       "capitulos": 24,
       "versiculos": 1017,
-      "notas": 163
+      "notas": 167
     },
     {
       "id": "joao",
@@ -452,7 +452,7 @@
       "testamento": "nt",
       "capitulos": 21,
       "versiculos": 809,
-      "notas": 157
+      "notas": 159
     },
     {
       "id": "atos",
@@ -461,7 +461,7 @@
       "testamento": "nt",
       "capitulos": 28,
       "versiculos": 915,
-      "notas": 179
+      "notas": 184
     },
     {
       "id": "romanos",
@@ -479,7 +479,7 @@
       "testamento": "nt",
       "capitulos": 16,
       "versiculos": 385,
-      "notas": 80
+      "notas": 82
     },
     {
       "id": "2-corintios",
@@ -560,7 +560,7 @@
       "testamento": "nt",
       "capitulos": 4,
       "versiculos": 75,
-      "notas": 16
+      "notas": 17
     },
     {
       "id": "tito",
@@ -569,7 +569,7 @@
       "testamento": "nt",
       "capitulos": 3,
       "versiculos": 43,
-      "notas": 7
+      "notas": 8
     },
     {
       "id": "filemom",
@@ -587,7 +587,7 @@
       "testamento": "nt",
       "capitulos": 13,
       "versiculos": 272,
-      "notas": 50
+      "notas": 51
     },
     {
       "id": "tiago",
@@ -596,7 +596,7 @@
       "testamento": "nt",
       "capitulos": 5,
       "versiculos": 93,
-      "notas": 29
+      "notas": 30
     },
     {
       "id": "1-pedro",
@@ -623,7 +623,7 @@
       "testamento": "nt",
       "capitulos": 5,
       "versiculos": 86,
-      "notas": 23
+      "notas": 25
     },
     {
       "id": "2-joao",
@@ -650,7 +650,7 @@
       "testamento": "nt",
       "capitulos": 1,
       "versiculos": 10,
-      "notas": 2
+      "notas": 3
     },
     {
       "id": "apocalipse",
@@ -659,9 +659,9 @@
       "testamento": "nt",
       "capitulos": 22,
       "versiculos": 374,
-      "notas": 167
+      "notas": 168
     }
   ],
   "versiculos": 33780,
-  "notas": 6749
+  "notas": 6917
 }

@@ -158,7 +158,7 @@ export function SearchPanel() {
       <Input
         value={q}
         onChange={(e) => run(e.target.value)}
-        placeholder={ready ? "Ex.: Macabeus 1  ou  Macabeus 1,1" : "A carregar o índice..."}
+        placeholder={ready ? "Ex.: Macabeus 1  ou  Macabeus 1,1" : "Carregando o índice..."}
         name="q"
         className="mt-8 h-12 bg-card font-reading text-base"
         autoFocus

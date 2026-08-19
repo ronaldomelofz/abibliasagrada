@@ -20,15 +20,15 @@ export default function HomePage() {
               <span className="block italic text-primary">Sagrada</span>
             </h1>
             <p className="mt-6 max-w-md font-reading text-lg leading-8 text-muted-foreground">
-              Texto integral em português, na tradução de António Pereira de
+              Texto integral em português, na tradução de Antônio Pereira de
               Figueiredo, oratoriano, natural de Mação, feita a partir da
               Vulgata latina. Cânone católico: setenta e três livros.
             </p>
             <div className="mt-8 flex flex-wrap gap-x-8 gap-y-2 text-[12px] uppercase tracking-[0.18em] text-muted-foreground">
               <span>{stats.livros} livros</span>
               <span>{stats.capitulos} capítulos</span>
-              <span>{stats.versiculos.toLocaleString("pt-PT")} versículos</span>
-              <span>{stats.notas.toLocaleString("pt-PT")} notas</span>
+              <span>{stats.versiculos.toLocaleString("pt-BR")} versículos</span>
+              <span>{stats.notas.toLocaleString("pt-BR")} notas</span>
             </div>
             <SearchBar size="hero" className="mt-8 max-w-xl" />
             <div className="mt-6 flex flex-wrap gap-3">
@@ -36,7 +36,7 @@ export default function HomePage() {
                 href="/livro/genesis/1/"
                 className="inline-flex h-10 items-center bg-primary px-5 text-[12px] uppercase tracking-[0.18em] text-primary-foreground"
               >
-                Abrir o Génesis
+                Abrir o Gênesis
               </Link>
               <Link
                 href="/livro/mateus/1/"

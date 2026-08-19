@@ -10,19 +10,19 @@ export default function AboutPage() {
       <h1 className="mt-3 font-display text-4xl tracking-tight">Esta edição</h1>
       <div className="mt-8 space-y-5 text-lg leading-8">
         <p>
-          António Pereira de Figueiredo (1725–1797) traduziu a Bíblia a partir da
+          Antônio Pereira de Figueiredo (1725–1797) traduziu a Bíblia a partir da
           Vulgata latina. O Novo Testamento saiu entre 1778 e 1781; o Antigo, entre
-          1782 e 1790. A versão em volume único data de 1821. O texto, as notas e o
-          dicionário foram relidos página a página com Tesseract 5.5 em português
+          1782 e 1790. A edição em volume único data de 1821. O texto, as notas e o
+          dicionário foram lidos página a página com Tesseract 5.5 em português
           (300 dpi) a partir dos PDFs da pasta documentos — edição impressa de 1950
           (Ano Santo), Editora das Américas, São Paulo. A camada de texto antiga do
           PDF era irregular; o OCR reconstitui o impresso.
         </p>
         <p>
           O cânone segue a Igreja Católica Apostólica Romana: {stats.livros} livros,{" "}
-          {stats.capitulos} capítulos, {stats.versiculos.toLocaleString("pt-PT")}{" "}
-          versículos e {stats.notas.toLocaleString("pt-PT")} notas explicativas. A
-          busca consulta só este corpus: texto sagrado, notas de rodapé e o
+          {stats.capitulos} capítulos, {stats.versiculos.toLocaleString("pt-BR")}{" "}
+          versículos e {stats.notas.toLocaleString("pt-BR")} notas explicativas. A
+          busca consulta só este conjunto: texto sagrado, notas de rodapé e o
           dicionário bíblico (volume 13).
         </p>
         <p>
@@ -40,9 +40,10 @@ export default function AboutPage() {
           fica de fora pelo mesmo motivo.
         </p>
         <p>
-          A tradução de Figueiredo, do século XVIII, está no domínio público. A
-          grafia de 1950 foi conservada. Esta composição digital não substitui uma
-          edição crítica nem o juízo da Igreja sobre o texto sagrado.
+          A tradução de Figueiredo, do século XVIII, está em domínio público. A
+          grafia da edição de 1950 foi conservada no texto bíblico; a navegação do
+          site está em português do Brasil. Esta composição digital não substitui
+          uma edição crítica nem o juízo da Igreja sobre o texto sagrado.
         </p>
       </div>
     </main>

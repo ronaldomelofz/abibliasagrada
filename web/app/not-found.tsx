@@ -9,7 +9,7 @@ export default function NotFound() {
         Esse livro ou capítulo não existe neste cânone.
       </p>
       <Link href="/" className="mt-8 inline-block text-[12px] uppercase tracking-[0.18em] text-primary">
-        Voltar ao indice
+        Voltar ao índice
       </Link>
     </main>
   )
