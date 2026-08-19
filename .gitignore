@@ -1,0 +1,32 @@
+# Next.js
+web/node_modules/
+web/.next/
+web/out/
+web/.turbo/
+web/.vercel/
+
+# Python / OCR
+.venv-ocr/
+.venv/
+__pycache__/
+*.py[cod]
+scripts/__pycache__/
+scripts/_*.py
+
+# Fontes pesadas e caches (não vão para o GitHub)
+documentos/
+_ocr/
+_extract/
+_sample_vol1.txt
+# Cópia local da extração (o site usa web/data)
+/data/
+
+# Sistema
+.DS_Store
+Thumbs.db
+*.log
+.env
+.env.*
+
+# Netlify local
+.netlify

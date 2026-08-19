@@ -1,0 +1,13 @@
+[build]
+  base = "web"
+  command = "pnpm build"
+  publish = "out"
+
+[build.environment]
+  NODE_VERSION = "22"
+  PNPM_VERSION = "10"
+
+[[headers]]
+  for = "/data/*"
+  [headers.values]
+    Cache-Control = "public, max-age=86400"

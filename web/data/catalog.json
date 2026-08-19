@@ -1,0 +1,667 @@
+{
+  "traducao": "Figueiredo",
+  "ano": 1950,
+  "fonte": "documentos/",
+  "canone": "Catolico Romano (73 livros)",
+  "livros": [
+    {
+      "id": "genesis",
+      "nome": "Gênesis",
+      "abbrev": "Gn",
+      "testamento": "at",
+      "capitulos": 50,
+      "versiculos": 1482,
+      "notas": 190
+    },
+    {
+      "id": "exodo",
+      "nome": "Êxodo",
+      "abbrev": "Ex",
+      "testamento": "at",
+      "capitulos": 40,
+      "versiculos": 1152,
+      "notas": 166
+    },
+    {
+      "id": "levitico",
+      "nome": "Levítico",
+      "abbrev": "Lv",
+      "testamento": "at",
+      "capitulos": 27,
+      "versiculos": 829,
+      "notas": 131
+    },
+    {
+      "id": "numeros",
+      "nome": "Números",
+      "abbrev": "Nm",
+      "testamento": "at",
+      "capitulos": 36,
+      "versiculos": 1186,
+      "notas": 165
+    },
+    {
+      "id": "deuteronomio",
+      "nome": "Deuteronômio",
+      "abbrev": "Dt",
+      "testamento": "at",
+      "capitulos": 34,
+      "versiculos": 904,
+      "notas": 145
+    },
+    {
+      "id": "josue",
+      "nome": "Josué",
+      "abbrev": "Js",
+      "testamento": "at",
+      "capitulos": 24,
+      "versiculos": 599,
+      "notas": 95
+    },
+    {
+      "id": "juizes",
+      "nome": "Juízes",
+      "abbrev": "Jz",
+      "testamento": "at",
+      "capitulos": 21,
+      "versiculos": 595,
+      "notas": 91
+    },
+    {
+      "id": "rute",
+      "nome": "Rute",
+      "abbrev": "Rt",
+      "testamento": "at",
+      "capitulos": 4,
+      "versiculos": 82,
+      "notas": 12
+    },
+    {
+      "id": "1-samuel",
+      "nome": "I Samuel",
+      "abbrev": "1Sm",
+      "testamento": "at",
+      "capitulos": 31,
+      "versiculos": 770,
+      "notas": 131
+    },
+    {
+      "id": "2-samuel",
+      "nome": "II Samuel",
+      "abbrev": "2Sm",
+      "testamento": "at",
+      "capitulos": 24,
+      "versiculos": 658,
+      "notas": 127
+    },
+    {
+      "id": "1-reis",
+      "nome": "I Reis",
+      "abbrev": "1Rs",
+      "testamento": "at",
+      "capitulos": 22,
+      "versiculos": 770,
+      "notas": 136
+    },
+    {
+      "id": "2-reis",
+      "nome": "II Reis",
+      "abbrev": "2Rs",
+      "testamento": "at",
+      "capitulos": 25,
+      "versiculos": 657,
+      "notas": 106
+    },
+    {
+      "id": "1-cronicas",
+      "nome": "I Paralipômenos",
+      "abbrev": "1Cr",
+      "testamento": "at",
+      "capitulos": 29,
+      "versiculos": 889,
+      "notas": 64
+    },
+    {
+      "id": "2-cronicas",
+      "nome": "II Paralipômenos",
+      "abbrev": "2Cr",
+      "testamento": "at",
+      "capitulos": 36,
+      "versiculos": 746,
+      "notas": 103
+    },
+    {
+      "id": "esdras",
+      "nome": "Esdras",
+      "abbrev": "Esd",
+      "testamento": "at",
+      "capitulos": 10,
+      "versiculos": 269,
+      "notas": 41
+    },
+    {
+      "id": "neemias",
+      "nome": "Neemias",
+      "abbrev": "Ne",
+      "testamento": "at",
+      "capitulos": 13,
+      "versiculos": 389,
+      "notas": 57
+    },
+    {
+      "id": "tobias",
+      "nome": "Tobias",
+      "abbrev": "Tb",
+      "testamento": "at",
+      "capitulos": 14,
+      "versiculos": 293,
+      "notas": 27
+    },
+    {
+      "id": "judite",
+      "nome": "Judite",
+      "abbrev": "Jt",
+      "testamento": "at",
+      "capitulos": 16,
+      "versiculos": 330,
+      "notas": 30
+    },
+    {
+      "id": "ester",
+      "nome": "Ester",
+      "abbrev": "Est",
+      "testamento": "at",
+      "capitulos": 16,
+      "versiculos": 253,
+      "notas": 40
+    },
+    {
+      "id": "jo",
+      "nome": "Jó",
+      "abbrev": "Jo",
+      "testamento": "at",
+      "capitulos": 42,
+      "versiculos": 1014,
+      "notas": 250
+    },
+    {
+      "id": "salmos",
+      "nome": "Salmos",
+      "abbrev": "Sl",
+      "testamento": "at",
+      "capitulos": 150,
+      "versiculos": 2443,
+      "notas": 840
+    },
+    {
+      "id": "proverbios",
+      "nome": "Provérbios",
+      "abbrev": "Pr",
+      "testamento": "at",
+      "capitulos": 31,
+      "versiculos": 884,
+      "notas": 264
+    },
+    {
+      "id": "eclesiastes",
+      "nome": "Eclesiastes",
+      "abbrev": "Ecl",
+      "testamento": "at",
+      "capitulos": 12,
+      "versiculos": 221,
+      "notas": 27
+    },
+    {
+      "id": "cantico",
+      "nome": "Cântico dos Cânticos",
+      "abbrev": "Ct",
+      "testamento": "at",
+      "capitulos": 8,
+      "versiculos": 114,
+      "notas": 56
+    },
+    {
+      "id": "sabedoria",
+      "nome": "Sabedoria",
+      "abbrev": "Sb",
+      "testamento": "at",
+      "capitulos": 19,
+      "versiculos": 435,
+      "notas": 73
+    },
+    {
+      "id": "eclesiastico",
+      "nome": "Eclesiástico",
+      "abbrev": "Eclo",
+      "testamento": "at",
+      "capitulos": 51,
+      "versiculos": 1565,
+      "notas": 330
+    },
+    {
+      "id": "isaias",
+      "nome": "Isaías",
+      "abbrev": "Is",
+      "testamento": "at",
+      "capitulos": 66,
+      "versiculos": 1258,
+      "notas": 437
+    },
+    {
+      "id": "jeremias",
+      "nome": "Jeremias",
+      "abbrev": "Jr",
+      "testamento": "at",
+      "capitulos": 52,
+      "versiculos": 1319,
+      "notas": 283
+    },
+    {
+      "id": "lamentacoes",
+      "nome": "Lamentações",
+      "abbrev": "Lm",
+      "testamento": "at",
+      "capitulos": 5,
+      "versiculos": 153,
+      "notas": 28
+    },
+    {
+      "id": "baruc",
+      "nome": "Baruc",
+      "abbrev": "Br",
+      "testamento": "at",
+      "capitulos": 6,
+      "versiculos": 210,
+      "notas": 31
+    },
+    {
+      "id": "ezequiel",
+      "nome": "Ezequiel",
+      "abbrev": "Ez",
+      "testamento": "at",
+      "capitulos": 48,
+      "versiculos": 1226,
+      "notas": 286
+    },
+    {
+      "id": "daniel",
+      "nome": "Daniel",
+      "abbrev": "Dn",
+      "testamento": "at",
+      "capitulos": 14,
+      "versiculos": 523,
+      "notas": 95
+    },
+    {
+      "id": "oseias",
+      "nome": "Oséias",
+      "abbrev": "Os",
+      "testamento": "at",
+      "capitulos": 14,
+      "versiculos": 195,
+      "notas": 47
+    },
+    {
+      "id": "joel",
+      "nome": "Joel",
+      "abbrev": "Jl",
+      "testamento": "at",
+      "capitulos": 3,
+      "versiculos": 70,
+      "notas": 14
+    },
+    {
+      "id": "amos",
+      "nome": "Amós",
+      "abbrev": "Am",
+      "testamento": "at",
+      "capitulos": 9,
+      "versiculos": 126,
+      "notas": 35
+    },
+    {
+      "id": "abdias",
+      "nome": "Abdias",
+      "abbrev": "Ab",
+      "testamento": "at",
+      "capitulos": 1,
+      "versiculos": 20,
+      "notas": 10
+    },
+    {
+      "id": "jonas",
+      "nome": "Jonas",
+      "abbrev": "Jn",
+      "testamento": "at",
+      "capitulos": 4,
+      "versiculos": 48,
+      "notas": 7
+    },
+    {
+      "id": "miqueias",
+      "nome": "Miquéias",
+      "abbrev": "Mq",
+      "testamento": "at",
+      "capitulos": 7,
+      "versiculos": 102,
+      "notas": 24
+    },
+    {
+      "id": "naum",
+      "nome": "Naum",
+      "abbrev": "Na",
+      "testamento": "at",
+      "capitulos": 3,
+      "versiculos": 47,
+      "notas": 11
+    },
+    {
+      "id": "habacuc",
+      "nome": "Habacuc",
+      "abbrev": "Hab",
+      "testamento": "at",
+      "capitulos": 3,
+      "versiculos": 55,
+      "notas": 15
+    },
+    {
+      "id": "sofonias",
+      "nome": "Sofonias",
+      "abbrev": "Sf",
+      "testamento": "at",
+      "capitulos": 3,
+      "versiculos": 51,
+      "notas": 13
+    },
+    {
+      "id": "ageu",
+      "nome": "Ageu",
+      "abbrev": "Ag",
+      "testamento": "at",
+      "capitulos": 2,
+      "versiculos": 36,
+      "notas": 9
+    },
+    {
+      "id": "zacarias",
+      "nome": "Zacarias",
+      "abbrev": "Zc",
+      "testamento": "at",
+      "capitulos": 14,
+      "versiculos": 199,
+      "notas": 67
+    },
+    {
+      "id": "malaquias",
+      "nome": "Malaquias",
+      "abbrev": "Ml",
+      "testamento": "at",
+      "capitulos": 4,
+      "versiculos": 53,
+      "notas": 14
+    },
+    {
+      "id": "1-macabeus",
+      "nome": "I Macabeus",
+      "abbrev": "1Mc",
+      "testamento": "at",
+      "capitulos": 16,
+      "versiculos": 771,
+      "notas": 104
+    },
+    {
+      "id": "2-macabeus",
+      "nome": "II Macabeus",
+      "abbrev": "2Mc",
+      "testamento": "at",
+      "capitulos": 15,
+      "versiculos": 545,
+      "notas": 83
+    },
+    {
+      "id": "mateus",
+      "nome": "Mateus",
+      "abbrev": "Mt",
+      "testamento": "nt",
+      "capitulos": 28,
+      "versiculos": 985,
+      "notas": 258
+    },
+    {
+      "id": "marcos",
+      "nome": "Marcos",
+      "abbrev": "Mc",
+      "testamento": "nt",
+      "capitulos": 16,
+      "versiculos": 619,
+      "notas": 64
+    },
+    {
+      "id": "lucas",
+      "nome": "Lucas",
+      "abbrev": "Lc",
+      "testamento": "nt",
+      "capitulos": 24,
+      "versiculos": 1017,
+      "notas": 163
+    },
+    {
+      "id": "joao",
+      "nome": "João",
+      "abbrev": "Jo",
+      "testamento": "nt",
+      "capitulos": 21,
+      "versiculos": 809,
+      "notas": 157
+    },
+    {
+      "id": "atos",
+      "nome": "Atos dos Apóstolos",
+      "abbrev": "At",
+      "testamento": "nt",
+      "capitulos": 28,
+      "versiculos": 915,
+      "notas": 179
+    },
+    {
+      "id": "romanos",
+      "nome": "Romanos",
+      "abbrev": "Rm",
+      "testamento": "nt",
+      "capitulos": 16,
+      "versiculos": 413,
+      "notas": 66
+    },
+    {
+      "id": "1-corintios",
+      "nome": "I Coríntios",
+      "abbrev": "1Cor",
+      "testamento": "nt",
+      "capitulos": 16,
+      "versiculos": 385,
+      "notas": 80
+    },
+    {
+      "id": "2-corintios",
+      "nome": "II Coríntios",
+      "abbrev": "2Cor",
+      "testamento": "nt",
+      "capitulos": 13,
+      "versiculos": 240,
+      "notas": 36
+    },
+    {
+      "id": "galatas",
+      "nome": "Gálatas",
+      "abbrev": "Gl",
+      "testamento": "nt",
+      "capitulos": 6,
+      "versiculos": 145,
+      "notas": 24
+    },
+    {
+      "id": "efesios",
+      "nome": "Efésios",
+      "abbrev": "Ef",
+      "testamento": "nt",
+      "capitulos": 6,
+      "versiculos": 148,
+      "notas": 19
+    },
+    {
+      "id": "filipenses",
+      "nome": "Filipenses",
+      "abbrev": "Fl",
+      "testamento": "nt",
+      "capitulos": 4,
+      "versiculos": 101,
+      "notas": 14
+    },
+    {
+      "id": "colossenses",
+      "nome": "Colossenses",
+      "abbrev": "Cl",
+      "testamento": "nt",
+      "capitulos": 4,
+      "versiculos": 90,
+      "notas": 11
+    },
+    {
+      "id": "1-tessalonicenses",
+      "nome": "I Tessalonicenses",
+      "abbrev": "1Ts",
+      "testamento": "nt",
+      "capitulos": 5,
+      "versiculos": 84,
+      "notas": 10
+    },
+    {
+      "id": "2-tessalonicenses",
+      "nome": "II Tessalonicenses",
+      "abbrev": "2Ts",
+      "testamento": "nt",
+      "capitulos": 3,
+      "versiculos": 42,
+      "notas": 8
+    },
+    {
+      "id": "1-timoteo",
+      "nome": "I Timóteo",
+      "abbrev": "1Tm",
+      "testamento": "nt",
+      "capitulos": 6,
+      "versiculos": 108,
+      "notas": 17
+    },
+    {
+      "id": "2-timoteo",
+      "nome": "II Timóteo",
+      "abbrev": "2Tm",
+      "testamento": "nt",
+      "capitulos": 4,
+      "versiculos": 75,
+      "notas": 16
+    },
+    {
+      "id": "tito",
+      "nome": "Tito",
+      "abbrev": "Tt",
+      "testamento": "nt",
+      "capitulos": 3,
+      "versiculos": 43,
+      "notas": 7
+    },
+    {
+      "id": "filemom",
+      "nome": "Filêmon",
+      "abbrev": "Fm",
+      "testamento": "nt",
+      "capitulos": 1,
+      "versiculos": 13,
+      "notas": 2
+    },
+    {
+      "id": "hebreus",
+      "nome": "Hebreus",
+      "abbrev": "Hb",
+      "testamento": "nt",
+      "capitulos": 13,
+      "versiculos": 272,
+      "notas": 50
+    },
+    {
+      "id": "tiago",
+      "nome": "Tiago",
+      "abbrev": "Tg",
+      "testamento": "nt",
+      "capitulos": 5,
+      "versiculos": 93,
+      "notas": 29
+    },
+    {
+      "id": "1-pedro",
+      "nome": "I Pedro",
+      "abbrev": "1Pd",
+      "testamento": "nt",
+      "capitulos": 5,
+      "versiculos": 101,
+      "notas": 20
+    },
+    {
+      "id": "2-pedro",
+      "nome": "II Pedro",
+      "abbrev": "2Pd",
+      "testamento": "nt",
+      "capitulos": 3,
+      "versiculos": 52,
+      "notas": 11
+    },
+    {
+      "id": "1-joao",
+      "nome": "I João",
+      "abbrev": "1Jo",
+      "testamento": "nt",
+      "capitulos": 5,
+      "versiculos": 86,
+      "notas": 23
+    },
+    {
+      "id": "2-joao",
+      "nome": "II João",
+      "abbrev": "2Jo",
+      "testamento": "nt",
+      "capitulos": 1,
+      "versiculos": 15,
+      "notas": 3
+    },
+    {
+      "id": "3-joao",
+      "nome": "III João",
+      "abbrev": "3Jo",
+      "testamento": "nt",
+      "capitulos": 1,
+      "versiculos": 9,
+      "notas": 3
+    },
+    {
+      "id": "judas",
+      "nome": "Judas",
+      "abbrev": "Jd",
+      "testamento": "nt",
+      "capitulos": 1,
+      "versiculos": 10,
+      "notas": 2
+    },
+    {
+      "id": "apocalipse",
+      "nome": "Apocalipse",
+      "abbrev": "Ap",
+      "testamento": "nt",
+      "capitulos": 22,
+      "versiculos": 374,
+      "notas": 167
+    }
+  ],
+  "versiculos": 33780,
+  "notas": 6749
+}
