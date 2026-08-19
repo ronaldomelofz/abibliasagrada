@@ -32,7 +32,7 @@ export function SearchBar({ size = "header", defaultValue = "", className }: Pro
         name="q"
         type="search"
         defaultValue={defaultValue}
-        placeholder={hero ? "Buscar no texto, nas notas… ou Gn 1,1" : "Buscar…"}
+        placeholder={hero ? "Mateus 5  ou  Mateus 5,1" : "Mateus 5,1"}
         autoComplete="off"
         className={cn(
           "min-w-0 flex-1 bg-transparent px-2.5 outline-none placeholder:text-muted-foreground",
