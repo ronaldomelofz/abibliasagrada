@@ -24,6 +24,13 @@ export type BibleRef = {
   verse: number | null
 }
 
+export type QueryIntent =
+  | { type: "empty" }
+  | { type: "books"; books: RefBook[] }
+  | { type: "ref"; ref: BibleRef }
+  | { type: "unknown-ref"; bookHint: string; chapter: number; verse: number | null }
+  | { type: "text"; needle: string }
+
 const ROMAN: Record<string, string> = { "1": "i", "2": "ii", "3": "iii" }
 
 const EXTRA: Record<string, string[]> = {
@@ -110,17 +117,62 @@ export function findBooks(name: string): RefBook[] {
   return [...exact, ...partial.filter((b) => !seen.has(b.id))]
 }
 
-/** Livro + capítulo, e versículo só após vírgula ou dois-pontos. */
-export function parseBibleRef(raw: string): BibleRef | null {
-  const needle = fold(raw)
-  if (!needle) return null
-  const m = needle.match(/^([a-z0-9 ]+?)(?:\s+|:)?(\d{1,3})(?:\s*[,:]\s*(\d{1,3})?)?$/)
-  if (!m) return null
-  const books = findBooks(m[1])
-  if (!books.length) return null
-  return {
-    books,
-    chapter: Number(m[2]),
-    verse: m[3] ? Number(m[3]) : null,
+/** Separa «livro capítulo» e, só depois de vírgula, o versículo. */
+export function splitRef(raw: string): { book: string; chapter: number; verse: number | null } | null {
+  let rest = fold(raw).replace(/[,:]$/, "")
+  if (!rest) return null
+  let verse: number | null = null
+  const withVerse = rest.match(/^(.*)[,:]\s*(\d{1,3})$/)
+  if (withVerse && fold(withVerse[1])) {
+    verse = Number(withVerse[2])
+    rest = fold(withVerse[1])
   }
+  const withChapter = rest.match(/^(.*?)(?:\s+|:)(\d{1,3})$/)
+  if (!withChapter) return null
+  const book = fold(withChapter[1])
+  if (!book || !/[a-z]/.test(book)) return null
+  return { book, chapter: Number(withChapter[2]), verse }
+}
+
+export function parseBibleRef(raw: string): BibleRef | null {
+  const intent = interpretQuery(raw)
+  return intent.type === "ref" ? intent.ref : null
+}
+
+export function interpretQuery(raw: string): QueryIntent {
+  const needle = fold(raw)
+  if (!needle) return { type: "empty" }
+
+  const split = splitRef(needle)
+  if (split) {
+    const matched = findBooks(split.book)
+    const books = matched.filter((b) => split.chapter >= 1 && split.chapter <= b.capitulos)
+    if (books.length) {
+      return { type: "ref", ref: { books, chapter: split.chapter, verse: split.verse } }
+    }
+    return {
+      type: "unknown-ref",
+      bookHint: split.book,
+      chapter: split.chapter,
+      verse: split.verse,
+    }
+  }
+
+  const books = findBooks(needle)
+  if (books.length) return { type: "books", books }
+  if (needle.length < 3) return { type: "empty" }
+  return { type: "text", needle }
+}
+
+/** Palavras inteiras; um número não casa o prefixo de outro (1 ≠ 12). */
+export function textMatches(haystack: string, needle: string): boolean {
+  const hay = fold(haystack)
+  const tokens = fold(needle).split(" ").filter(Boolean)
+  if (!tokens.length) return false
+  return tokens.every((token) => {
+    if (/^\d+$/.test(token)) {
+      return new RegExp(`(?:^|\\D)${token}(?:\\D|$)`).test(hay)
+    }
+    return hay.includes(token)
+  })
 }

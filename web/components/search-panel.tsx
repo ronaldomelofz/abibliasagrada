@@ -4,7 +4,12 @@ import Link from "next/link"
 import { useSearchParams } from "next/navigation"
 import { useEffect, useState } from "react"
 import { Input } from "@/components/ui/input"
-import { findBooks, fold, parseBibleRef, type BibleRef, type RefBook } from "@/lib/bible-ref"
+import {
+  interpretQuery,
+  textMatches,
+  type BibleRef,
+  type RefBook,
+} from "@/lib/bible-ref"
 
 type Hit = {
   b: string
@@ -40,13 +45,26 @@ function hitsForRef(ref: BibleRef): Hit[] {
     return h.k === "verso" || h.k == null
   })
   out.sort((a, b) => {
-    if (a.b !== b.b) return a.b.localeCompare(b.b)
+    const ia = ref.books.findIndex((bk) => bk.id === a.b)
+    const ib = ref.books.findIndex((bk) => bk.id === b.b)
+    if (ia !== ib) return ia - ib
     if (a.v !== b.v) return a.v - b.v
-    const ak = a.k === "nota" ? 1 : 0
-    const bk = b.k === "nota" ? 1 : 0
-    return ak - bk
+    return (a.k === "nota" ? 1 : 0) - (b.k === "nota" ? 1 : 0)
   })
   return out
+}
+
+function groupHits(hits: Hit[]) {
+  const order: string[] = []
+  const map = new Map<string, Hit[]>()
+  for (const h of hits) {
+    if (!map.has(h.b)) {
+      order.push(h.b)
+      map.set(h.b, [])
+    }
+    map.get(h.b)!.push(h)
+  }
+  return order.map((id) => ({ id, nome: map.get(id)![0].n, items: map.get(id)! }))
 }
 
 export function SearchPanel() {
@@ -57,6 +75,7 @@ export function SearchPanel() {
   const [hits, setHits] = useState<Hit[]>([])
   const [ref, setRef] = useState<BibleRef | null>(null)
   const [books, setBooks] = useState<RefBook[]>([])
+  const [miss, setMiss] = useState<string | null>(null)
 
   useEffect(() => {
     loadIndex().then(() => setReady(true))
@@ -69,8 +88,7 @@ export function SearchPanel() {
 
   function hrefFor(h: Hit) {
     if (h.k === "dicionario" || h.b === "dicionario") return "/dicionario/"
-    const hash = `#v${h.v}`
-    return `/livro/${h.b}/${h.c}/${hash}`
+    return `/livro/${h.b}/${h.c}/#v${h.v}`
   }
 
   function run(value: string) {
@@ -79,38 +97,53 @@ export function SearchPanel() {
       setHits([])
       setRef(null)
       setBooks([])
+      setMiss(null)
       return
     }
-    const parsed = parseBibleRef(value)
-    if (parsed) {
-      setRef(parsed)
-      setBooks(parsed.books)
-      setHits(hitsForRef(parsed))
-      return
-    }
-    const found = findBooks(value)
-    if (found.length) {
-      setRef(null)
-      setBooks(found)
+    const intent = interpretQuery(value)
+    if (intent.type === "empty") {
       setHits([])
+      setRef(null)
+      setBooks([])
+      setMiss(null)
+      return
+    }
+    if (intent.type === "ref") {
+      setRef(intent.ref)
+      setBooks(intent.ref.books)
+      setHits(hitsForRef(intent.ref))
+      setMiss(null)
+      return
+    }
+    if (intent.type === "unknown-ref") {
+      setRef(null)
+      setBooks([])
+      setHits([])
+      const v = intent.verse != null ? `,${intent.verse}` : ""
+      setMiss(`Não há «${intent.bookHint} ${intent.chapter}${v}» no cânone desta edição.`)
+      return
+    }
+    if (intent.type === "books") {
+      setRef(null)
+      setBooks(intent.books)
+      setHits([])
+      setMiss(null)
       return
     }
     setRef(null)
     setBooks([])
-    const needle = fold(value)
-    if (needle.length < 3) {
-      setHits([])
-      return
-    }
+    setMiss(null)
     const out: Hit[] = []
     for (const h of cache) {
-      if (fold(h.t).includes(needle)) {
+      if (textMatches(h.t, intent.needle)) {
         out.push(h)
         if (out.length >= 80) break
       }
     }
     setHits(out)
   }
+
+  const groups = ref && ref.books.length > 1 ? groupHits(hits) : null
 
   return (
     <div className="mx-auto w-full max-w-3xl px-4 py-12">
@@ -119,14 +152,13 @@ export function SearchPanel() {
       </p>
       <h1 className="mt-2 font-display text-4xl tracking-tight">Busca</h1>
       <p className="mt-3 max-w-xl text-sm leading-relaxed text-muted-foreground">
-        Procura no texto sagrado, nas notas da edição de 1950 e no dicionário
-        bíblico. Pode escrever só parte do nome (Macabeus). Depois o capítulo
-        (Macabeus 1) e, com vírgula, o versículo (Macabeus 1,1).
+        Livro (ou parte do nome), depois o capítulo. O versículo só entra depois
+        da vírgula: Macabeus 1 ou Macabeus 1,1.
       </p>
       <Input
         value={q}
         onChange={(e) => run(e.target.value)}
-        placeholder={ready ? "Ex.: Mateus 5  ou  Mateus 5,1" : "A carregar o índice..."}
+        placeholder={ready ? "Ex.: Macabeus 1  ou  Macabeus 1,1" : "A carregar o índice..."}
         name="q"
         className="mt-8 h-12 bg-card font-reading text-base"
         autoFocus
@@ -134,13 +166,13 @@ export function SearchPanel() {
       <p className="mt-3 text-xs text-muted-foreground">
         {!q.trim()
           ? "Comece pelo nome do livro, ou por parte dele."
-          : ref
-            ? `${hits.length} ${ref.verse != null ? "ocorrência" : "versículo"}${hits.length === 1 ? "" : "s"}`
-            : books.length
-              ? `${books.length} livro${books.length === 1 ? "" : "s"} — acrescente o capítulo, por exemplo ${books[0].nome} 1.`
-              : fold(q).length < 3
-                ? "Escreva pelo menos três letras, ou uma referência (Mateus 5)."
-                : `${hits.length} ocorrências`}
+          : miss
+            ? miss
+            : ref
+              ? `${hits.length} ${ref.verse != null ? "ocorrência" : "versículo"}${hits.length === 1 ? "" : "s"}`
+              : books.length
+                ? `${books.length} livro${books.length === 1 ? "" : "s"} — acrescente o capítulo, por exemplo ${books[0].nome.replace(/^I+ /, "")} 1.`
+                : `${hits.length} ocorrência${hits.length === 1 ? "" : "s"}`}
       </p>
       {!ref && books.length > 0 ? (
         <ul className="mt-6 divide-y divide-border border-y border-border">
@@ -176,21 +208,45 @@ export function SearchPanel() {
           ))}
         </p>
       ) : null}
-      <ol className="mt-8 space-y-5">
-        {hits.map((h, i) => (
-          <li key={`${h.k}-${h.b}-${h.c}-${h.v}-${i}`}>
-            <Link href={hrefFor(h)} className="group block">
-              <p className="text-[11px] uppercase tracking-[0.2em] text-primary">
-                {KIND[h.k || "verso"]} · {h.n}
-                {h.c ? ` ${h.c},${h.v}` : ""}
-              </p>
-              <p className="mt-1 font-reading text-[1.05rem] leading-7 group-hover:text-primary">
-                {h.t.length > 420 ? `${h.t.slice(0, 420)}…` : h.t}
-              </p>
-            </Link>
-          </li>
-        ))}
-      </ol>
+      {groups ? (
+        <div className="mt-8 space-y-10">
+          {groups.map((g) => (
+            <section key={g.id}>
+              <h2 className="font-display text-2xl tracking-tight">
+                {g.nome} {ref!.chapter}
+                {ref!.verse != null ? `,${ref!.verse}` : ""}
+              </h2>
+              <ol className="mt-4 space-y-5">
+                {g.items.map((h, i) => (
+                  <HitItem key={`${h.k}-${h.b}-${h.c}-${h.v}-${i}`} h={h} href={hrefFor(h)} />
+                ))}
+              </ol>
+            </section>
+          ))}
+        </div>
+      ) : (
+        <ol className="mt-8 space-y-5">
+          {hits.map((h, i) => (
+            <HitItem key={`${h.k}-${h.b}-${h.c}-${h.v}-${i}`} h={h} href={hrefFor(h)} />
+          ))}
+        </ol>
+      )}
     </div>
+  )
+}
+
+function HitItem({ h, href }: { h: Hit; href: string }) {
+  return (
+    <li>
+      <Link href={href} className="group block">
+        <p className="text-[11px] uppercase tracking-[0.2em] text-primary">
+          {KIND[h.k || "verso"]} · {h.n}
+          {h.c ? ` ${h.c},${h.v}` : ""}
+        </p>
+        <p className="mt-1 font-reading text-[1.05rem] leading-7 group-hover:text-primary">
+          {h.t.length > 420 ? `${h.t.slice(0, 420)}…` : h.t}
+        </p>
+      </Link>
+    </li>
   )
 }
