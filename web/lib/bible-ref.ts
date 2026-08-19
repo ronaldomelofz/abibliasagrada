@@ -11,7 +11,13 @@ export function fold(s: string) {
     .trim()
 }
 
-export type RefBook = { id: string; nome: string }
+export type RefBook = {
+  id: string
+  nome: string
+  abbrev: string
+  capitulos: number
+}
+
 export type BibleRef = {
   books: RefBook[]
   chapter: number
@@ -31,7 +37,7 @@ const EXTRA: Record<string, string[]> = {
   joao: ["sao joao", "s joao", "evangelho de joao"],
   jo: ["job"],
   salmos: ["salmo"],
-  "1-cronicas": ["1 cronicas", "i cronicas", "1 paralipomenos"],
+  "1-cronicas": ["1 cronicas", "i cronicas", "1 paralipomenos", "cronicas", "paralipomenos"],
   "2-cronicas": ["2 cronicas", "ii cronicas", "2 paralipomenos"],
   apocalipse: ["apoc"],
 }
@@ -52,6 +58,7 @@ function aliasesFor(id: string, nome: string, abbrev: string): string[] {
   if (numbered) {
     const [, n, rest] = numbered
     const restName = rest.replace(/-/g, " ")
+    add(restName)
     add(`${n} ${restName}`)
     add(`${n}${restName}`)
     add(`${ROMAN[n]} ${restName}`)
@@ -60,21 +67,47 @@ function aliasesFor(id: string, nome: string, abbrev: string): string[] {
   return [...out]
 }
 
-const ALIASES: { alias: string; id: string; nome: string }[] = catalog.livros.flatMap((b) =>
-  aliasesFor(b.id, b.nome, b.abbrev).map((alias) => ({ alias, id: b.id, nome: b.nome }))
-)
+type BookRow = RefBook & { aliases: string[] }
 
-function booksFor(name: string): RefBook[] {
+const BOOKS: BookRow[] = catalog.livros.map((b) => ({
+  id: b.id,
+  nome: b.nome,
+  abbrev: b.abbrev,
+  capitulos: b.capitulos,
+  aliases: aliasesFor(b.id, b.nome, b.abbrev),
+}))
+
+function toRef(b: BookRow): RefBook {
+  return { id: b.id, nome: b.nome, abbrev: b.abbrev, capitulos: b.capitulos }
+}
+
+function matchKind(needle: string, aliases: string[]): "exact" | "partial" | null {
+  if (aliases.includes(needle)) return "exact"
+  if (needle.length < 3) return null
+  for (const alias of aliases) {
+    if (alias.startsWith(needle)) return "partial"
+    const core = alias.replace(/^(i|ii|iii|1|2|3) /, "")
+    if (core === needle || core.startsWith(needle)) return "partial"
+    for (const token of alias.split(" ")) {
+      if (token === needle || token.startsWith(needle)) return "partial"
+    }
+  }
+  return null
+}
+
+/** Nome completo, abreviatura ou parte (ex.: macabeus → I e II Macabeus). */
+export function findBooks(name: string): RefBook[] {
   const n = fold(name)
   if (!n) return []
-  const seen = new Set<string>()
-  const books: RefBook[] = []
-  for (const row of ALIASES) {
-    if (row.alias !== n || seen.has(row.id)) continue
-    seen.add(row.id)
-    books.push({ id: row.id, nome: row.nome })
+  const exact: RefBook[] = []
+  const partial: RefBook[] = []
+  for (const b of BOOKS) {
+    const kind = matchKind(n, b.aliases)
+    if (kind === "exact") exact.push(toRef(b))
+    else if (kind === "partial") partial.push(toRef(b))
   }
-  return books
+  const seen = new Set(exact.map((b) => b.id))
+  return [...exact, ...partial.filter((b) => !seen.has(b.id))]
 }
 
 /** Livro + capítulo, e versículo só após vírgula ou dois-pontos. */
@@ -83,7 +116,7 @@ export function parseBibleRef(raw: string): BibleRef | null {
   if (!needle) return null
   const m = needle.match(/^([a-z0-9 ]+?)(?:\s+|:)?(\d{1,3})(?:\s*[,:]\s*(\d{1,3})?)?$/)
   if (!m) return null
-  const books = booksFor(m[1])
+  const books = findBooks(m[1])
   if (!books.length) return null
   return {
     books,

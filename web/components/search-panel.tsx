@@ -4,7 +4,7 @@ import Link from "next/link"
 import { useSearchParams } from "next/navigation"
 import { useEffect, useState } from "react"
 import { Input } from "@/components/ui/input"
-import { fold, parseBibleRef, type BibleRef } from "@/lib/bible-ref"
+import { findBooks, fold, parseBibleRef, type BibleRef, type RefBook } from "@/lib/bible-ref"
 
 type Hit = {
   b: string
@@ -56,6 +56,7 @@ export function SearchPanel() {
   const [ready, setReady] = useState(false)
   const [hits, setHits] = useState<Hit[]>([])
   const [ref, setRef] = useState<BibleRef | null>(null)
+  const [books, setBooks] = useState<RefBook[]>([])
 
   useEffect(() => {
     loadIndex().then(() => setReady(true))
@@ -77,15 +78,25 @@ export function SearchPanel() {
     if (!cache) {
       setHits([])
       setRef(null)
+      setBooks([])
       return
     }
     const parsed = parseBibleRef(value)
     if (parsed) {
       setRef(parsed)
+      setBooks(parsed.books)
       setHits(hitsForRef(parsed))
       return
     }
+    const found = findBooks(value)
+    if (found.length) {
+      setRef(null)
+      setBooks(found)
+      setHits([])
+      return
+    }
     setRef(null)
+    setBooks([])
     const needle = fold(value)
     if (needle.length < 3) {
       setHits([])
@@ -109,8 +120,8 @@ export function SearchPanel() {
       <h1 className="mt-2 font-display text-4xl tracking-tight">Busca</h1>
       <p className="mt-3 max-w-xl text-sm leading-relaxed text-muted-foreground">
         Procura no texto sagrado, nas notas da edição de 1950 e no dicionário
-        bíblico. Referência: livro e capítulo (Mateus 5); o versículo aparece
-        depois da vírgula (Mateus 5,1).
+        bíblico. Pode escrever só parte do nome (Macabeus). Depois o capítulo
+        (Macabeus 1) e, com vírgula, o versículo (Macabeus 1,1).
       </p>
       <Input
         value={q}
@@ -122,13 +133,29 @@ export function SearchPanel() {
       />
       <p className="mt-3 text-xs text-muted-foreground">
         {!q.trim()
-          ? "Comece pelo nome do livro, depois o capítulo."
+          ? "Comece pelo nome do livro, ou por parte dele."
           : ref
             ? `${hits.length} ${ref.verse != null ? "ocorrência" : "versículo"}${hits.length === 1 ? "" : "s"}`
-            : fold(q).length < 3
-              ? "Escreva pelo menos três letras, ou uma referência (Mateus 5)."
-              : `${hits.length} ocorrências`}
+            : books.length
+              ? `${books.length} livro${books.length === 1 ? "" : "s"} — acrescente o capítulo, por exemplo ${books[0].nome} 1.`
+              : fold(q).length < 3
+                ? "Escreva pelo menos três letras, ou uma referência (Mateus 5)."
+                : `${hits.length} ocorrências`}
       </p>
+      {!ref && books.length > 0 ? (
+        <ul className="mt-6 divide-y divide-border border-y border-border">
+          {books.map((b) => (
+            <li key={b.id}>
+              <Link href={`/livro/${b.id}/`} className="group flex items-baseline justify-between gap-4 py-3">
+                <span className="font-display text-xl tracking-tight group-hover:text-primary">{b.nome}</span>
+                <span className="shrink-0 text-[11px] uppercase tracking-[0.18em] text-muted-foreground">
+                  {b.abbrev} · {b.capitulos} cap.
+                </span>
+              </Link>
+            </li>
+          ))}
+        </ul>
+      ) : null}
       {ref && ref.books.length > 0 ? (
         <p className="mt-2 text-sm">
           {ref.books.map((b, i) => (
