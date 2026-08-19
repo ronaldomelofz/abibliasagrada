@@ -20,9 +20,9 @@ export default function HomePage() {
               <span className="block italic text-primary">Sagrada</span>
             </h1>
             <p className="mt-6 max-w-md font-reading text-lg leading-8 text-muted-foreground">
-              O texto completo no português de António Pereira de Figueiredo,
-              oratoriano de Mação, a partir da Vulgata latina. Cânone católico:
-              setenta e três livros, para ler com vagar.
+              Texto integral em português, na tradução de António Pereira de
+              Figueiredo, oratoriano, natural de Mação, feita a partir da
+              Vulgata latina. Cânone católico: setenta e três livros.
             </p>
             <div className="mt-8 flex flex-wrap gap-x-8 gap-y-2 text-[12px] uppercase tracking-[0.18em] text-muted-foreground">
               <span>{stats.livros} livros</span>
