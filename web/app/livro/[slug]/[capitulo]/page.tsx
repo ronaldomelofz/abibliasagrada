@@ -33,6 +33,7 @@ export default async function ChapterPage({
   if (!Number.isInteger(n) || n < 1 || n > meta.capitulos) notFound()
   const book = getBook(slug)
   const { prev, next } = neighbors(slug)
+  const ch = book.capitulos.find((c) => c.n === n)
 
   const prevHref =
     n > 1
@@ -47,5 +48,19 @@ export default async function ChapterPage({
         ? `/livro/${next.id}/1/`
         : null
 
-  return <ReaderView book={book} chapter={n} prevHref={prevHref} nextHref={nextHref} />
+  return (
+    <ReaderView
+      book={{
+        id: book.id,
+        nome: book.nome,
+        abbrev: book.abbrev,
+        testamento: book.testamento,
+      }}
+      chapter={n}
+      title={ch?.titulo ?? ""}
+      verses={ch?.versiculos ?? []}
+      prevHref={prevHref}
+      nextHref={nextHref}
+    />
+  )
 }

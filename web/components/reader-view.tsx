@@ -5,27 +5,36 @@ import { useRouter } from "next/navigation"
 import { useEffect, useMemo, useState } from "react"
 import { ChevronLeft, ChevronRight, Minus, Plus, Type } from "lucide-react"
 import { Button } from "@/components/ui/button"
-import type { Book, Note } from "@/lib/bible"
+import type { Note, Verse } from "@/lib/bible"
 import { cn } from "@/lib/utils"
 
 const SIZES = [1, 1.08, 1.18, 1.3, 1.45]
 
+export type ReaderBook = {
+  id: string
+  nome: string
+  abbrev: string
+  testamento: "at" | "nt"
+}
+
 export function ReaderView({
   book,
   chapter,
+  title,
+  verses,
   prevHref,
   nextHref,
 }: {
-  book: Book
+  book: ReaderBook
   chapter: number
+  title: string
+  verses: Verse[]
   prevHref: string | null
   nextHref: string | null
 }) {
   const router = useRouter()
   const [size, setSize] = useState(1)
   const [openNote, setOpenNote] = useState<number | null>(null)
-  const ch = book.capitulos.find((c) => c.n === chapter)
-  const verses = ch?.versiculos ?? []
 
   const notes = useMemo(() => {
     const map = new Map<number, Note>()
@@ -54,7 +63,7 @@ export function ReaderView({
     return () => window.removeEventListener("keydown", onKey)
   }, [nextHref, prevHref, router])
 
-  const title = useMemo(() => ch?.titulo?.replace(/\s+/g, " ").trim() ?? "", [ch])
+  const heading = title.replace(/\s+/g, " ").trim()
 
   function bump(delta: number) {
     setSize((s) => {
@@ -87,8 +96,8 @@ export function ReaderView({
             </Button>
           </div>
         </div>
-        {title ? (
-          <p className="mt-4 max-w-xl text-sm leading-relaxed text-muted-foreground">{title}</p>
+        {heading ? (
+          <p className="mt-4 max-w-xl text-sm leading-relaxed text-muted-foreground">{heading}</p>
         ) : null}
       </header>
 

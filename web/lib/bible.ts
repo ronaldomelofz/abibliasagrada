@@ -127,7 +127,7 @@ export const GROUPS: BookGroup[] = [
   },
   {
     id: "catolicas",
-    titulo: "Cartas catolicas",
+    titulo: "Cartas católicas",
     testamento: "nt",
     ids: ["tiago", "1-pedro", "2-pedro", "1-joao", "2-joao", "3-joao", "judas"],
   },

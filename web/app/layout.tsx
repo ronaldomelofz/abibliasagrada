@@ -8,18 +8,21 @@ import "./globals.css"
 const display = Fraunces({
   variable: "--font-display",
   subsets: ["latin", "latin-ext"],
+  display: "swap",
 })
 
 const reading = Newsreader({
   variable: "--font-reading",
   subsets: ["latin", "latin-ext"],
   style: ["normal", "italic"],
+  display: "swap",
 })
 
 const ui = Barlow_Condensed({
   variable: "--font-ui",
   subsets: ["latin", "latin-ext"],
   weight: ["400", "500", "600"],
+  display: "swap",
 })
 
 export const metadata: Metadata = {

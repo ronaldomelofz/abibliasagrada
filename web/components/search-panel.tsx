@@ -2,7 +2,7 @@
 
 import Link from "next/link"
 import { useSearchParams } from "next/navigation"
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { Input } from "@/components/ui/input"
 import {
   interpretQuery,
@@ -23,10 +23,29 @@ type Hit = {
 
 let cache: Hit[] | null = null
 
+type CompactIndex = {
+  v: number
+  b: [string, string, string][]
+  h: [number, number, number, string, number][]
+}
+
+function expandIndex(data: CompactIndex | Hit[]): Hit[] {
+  if (Array.isArray(data)) return data
+  return data.h.map(([bi, c, v, t, k]) => ({
+    b: data.b[bi][0],
+    n: data.b[bi][1],
+    a: data.b[bi][2],
+    c,
+    v,
+    t,
+    k: k === 1 ? "nota" : "verso",
+  }))
+}
+
 async function loadIndex() {
   if (cache) return cache
   const res = await fetch("/data/search.json")
-  cache = (await res.json()) as Hit[]
+  cache = expandIndex((await res.json()) as CompactIndex | Hit[])
   return cache
 }
 
@@ -76,6 +95,7 @@ export function SearchPanel() {
   const [ref, setRef] = useState<BibleRef | null>(null)
   const [books, setBooks] = useState<RefBook[]>([])
   const [miss, setMiss] = useState<string | null>(null)
+  const debounce = useRef<ReturnType<typeof setTimeout> | null>(null)
 
   useEffect(() => {
     loadIndex().then(() => setReady(true))
@@ -93,6 +113,7 @@ export function SearchPanel() {
 
   function run(value: string) {
     setQ(value)
+    if (debounce.current) clearTimeout(debounce.current)
     if (!cache) {
       setHits([])
       setRef(null)
@@ -100,6 +121,15 @@ export function SearchPanel() {
       setMiss(null)
       return
     }
+    const intent = interpretQuery(value)
+    if (intent.type === "text") {
+      debounce.current = setTimeout(() => applyIntent(value), 160)
+      return
+    }
+    applyIntent(value)
+  }
+
+  function applyIntent(value: string) {
     const intent = interpretQuery(value)
     if (intent.type === "empty") {
       setHits([])
@@ -133,6 +163,10 @@ export function SearchPanel() {
     setRef(null)
     setBooks([])
     setMiss(null)
+    if (!cache) {
+      setHits([])
+      return
+    }
     const out: Hit[] = []
     for (const h of cache) {
       if (textMatches(h.t, intent.needle)) {

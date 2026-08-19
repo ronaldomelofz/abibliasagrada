@@ -1180,7 +1180,6 @@ def export_all(store: Store, dicionario, intros):
     catalog = []
     total_v = 0
     total_n = 0
-    search = []
 
     for slug, nome, abbrev, test, expected in BOOKS:
         nome = DISPLAY.get(slug, nome)
@@ -1199,18 +1198,9 @@ def export_all(store: Store, dicionario, intros):
             for vn in sorted(ch["v"]):
                 item = ch["v"][vn]
                 notas = [x for x in item.get("notas", []) if x.get("t")]
-                verses.append({"n": vn, "t": item["t"], "notas": notas})
+                verses.append({"n": vn, "t": item["t"], **({"notas": notas} if notas else {})})
                 vc += 1
                 nc += len(notas)
-                search.append({
-                    "b": slug, "n": nome, "a": abbrev, "c": n, "v": vn,
-                    "t": item["t"], "k": "verso",
-                })
-                for note in notas:
-                    search.append({
-                        "b": slug, "n": nome, "a": abbrev, "c": n, "v": vn,
-                        "t": note["t"], "k": "nota",
-                    })
             caps.append({"n": n, "titulo": ch.get("titulo") or "", "versiculos": verses})
         payload = {
             "id": slug, "nome": nome, "abbrev": abbrev,
@@ -1248,13 +1238,7 @@ def export_all(store: Store, dicionario, intros):
         json.dumps(intros, ensure_ascii=False, separators=(",", ":")),
         encoding="utf-8",
     )
-    for item in dicionario:
-        search.append({"b": "dicionario", "n": "Dicionario", "a": "Dic", "c": 0, "v": 0, "t": item["lemma"] + " — " + item["t"][:500], "k": "dicionario"})
-    (OUT / "search.json").write_text(
-        json.dumps(search, ensure_ascii=False, separators=(",", ":")),
-        encoding="utf-8",
-    )
-    print(f"\nTOTAL versos={total_v} notas={total_n} verbetes={len(dicionario)} search={len(search)}")
+    print(f"\nTOTAL versos={total_v} notas={total_n} verbetes={len(dicionario)}")
     copy_to_web()
 
 
@@ -1264,7 +1248,6 @@ def copy_to_web():
     WEB_PUBLIC.mkdir(parents=True, exist_ok=True)
     shutil.copy2(OUT / "catalog.json", WEB_DATA / "catalog.json")
     shutil.copy2(OUT / "catalog.json", WEB_PUBLIC / "catalog.json")
-    shutil.copy2(OUT / "search.json", WEB_PUBLIC / "search.json")
     shutil.copy2(OUT / "dicionario.json", WEB_DATA / "dicionario.json")
     shutil.copy2(OUT / "dicionario.json", WEB_PUBLIC / "dicionario.json")
     shutil.copy2(OUT / "introducoes.json", WEB_DATA / "introducoes.json")

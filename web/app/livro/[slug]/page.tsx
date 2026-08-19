@@ -1,6 +1,6 @@
 import Link from "next/link"
 import { notFound } from "next/navigation"
-import { catalog, getBook, neighbors } from "@/lib/bible"
+import { catalog, neighbors } from "@/lib/bible"
 
 export function generateStaticParams() {
   return catalog.livros.map((b) => ({ slug: b.id }))
@@ -16,7 +16,6 @@ export default async function BookPage({ params }: { params: Promise<{ slug: str
   const { slug } = await params
   const meta = catalog.livros.find((b) => b.id === slug)
   if (!meta) notFound()
-  const book = getBook(slug)
   const { prev, next } = neighbors(slug)
 
   return (
@@ -30,22 +29,15 @@ export default async function BookPage({ params }: { params: Promise<{ slug: str
         {meta.notas ? ` · ${meta.notas} notas` : ""}
       </p>
       <div className="mt-10 grid grid-cols-5 gap-2 sm:grid-cols-8">
-        {book.capitulos.map((ch) => {
-          const empty = ch.versiculos.length === 0
-          return (
-            <Link
-              key={ch.n}
-              href={`/livro/${slug}/${ch.n}/`}
-              className={`flex h-11 items-center justify-center border text-sm ${
-                empty
-                  ? "border-dashed border-border text-muted-foreground"
-                  : "border-border bg-card hover:border-primary hover:text-primary"
-              }`}
-            >
-              {ch.n}
-            </Link>
-          )
-        })}
+        {Array.from({ length: meta.capitulos }, (_, i) => (
+          <Link
+            key={i + 1}
+            href={`/livro/${slug}/${i + 1}/`}
+            className="flex h-11 items-center justify-center border border-border bg-card text-sm hover:border-primary hover:text-primary"
+          >
+            {i + 1}
+          </Link>
+        ))}
       </div>
       <nav className="mt-12 flex justify-between text-[12px] uppercase tracking-[0.16em] text-muted-foreground">
         {prev ? (
